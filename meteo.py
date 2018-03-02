@@ -6,22 +6,35 @@
 import urllib.request
 from xml.dom import minidom
 
-def fetchData():
-    #meteoURL = "http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observation_si_latest.xml"
-    meteoURL = "http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml"
-    dom = minidom.parse(urllib.request.urlopen(meteoURL))
-    metData = dom.getElementsByTagName('metData')
-    #shortTitles = dom.getElementsByTagName('domain_shortTitle')
-    #tsUpdated = dom.getElementsByTagName('tsUpdated')[1].firstChild.data
-    #temperature = dom.getElementsByTagName('t_degreesC')[1].firstChild.data
-    #humidity = dom.getElementsByTagName('rh')[1].firstChild.data
+# Meteo.si URLs
+#meteoURL = "http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observation_si_latest.xml"
+meteoURL = "http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml"
 
-    for data in metData:
-        print(data.getElementsByTagName('domain_shortTitle').item(0).firstChild.data)
-        #print(data.firstChild.data)
-    #print(tsUpdated)
-    #print(temperature)
-    #print(humidity)
+def fetchData(url):
+    dom = minidom.parse(urllib.request.urlopen(url))
+    return dom.getElementsByTagName('metData')
 
-fetchData()
+def getRegionData(metData, tagName, tagData):
+		for data in metData:
+			if ( data.getElementsByTagName(tagName).item(0).firstChild.data == tagData ):
+				return data
+		return None
+
+def getRegionDataElement(regionData, tagName):
+		element = regionData.getElementsByTagName(tagName).item(0).firstChild
+		if (element!=None): return element.data
+		else: return None
+		
+
+regionData = getRegionData(fetchData(meteoURL),'domain_shortTitle','LJUBLJANA - BEŽIGRAD')
+if (regionData != None):
+		dataTitle = getRegionDataElement(regionData,'domain_longTitle')
+		dataTemp = getRegionDataElement(regionData,'t')
+		dataHum = getRegionDataElement(regionData,'rh')
+		dataWindSpeed = getRegionDataElement(regionData,'ff_val') 
+		if (dataWindSpeed == None) : dataWindSpeed=""
+		print(dataTitle + " : " + dataTemp + "°C / " + dataHum + "%  " + dataWindSpeed)
+else:
+		print("Region data doesn't exist!")
+
 

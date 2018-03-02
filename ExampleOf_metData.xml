@@ -1,0 +1,147 @@
+<domain_title>BABNO POLJE</domain_title>
+<domain_shortTitle>BABNO POLJE</domain_shortTitle>
+<domain_longTitle>Babno Polje</domain_longTitle>
+
+<domain_lat>45.6452</domain_lat>
+<domain_lon>14.5449</domain_lon>
+<domain_altitude>756.0</domain_altitude>
+
+<sunrise>02.03.2018 6:39 CET</sunrise>
+<sunset>02.03.2018 17:50 CET</sunset>
+
+<tsValid_issued>02.03.2018 14:00 CET</tsValid_issued>
+<tsValid_issued_day>Petek CET</tsValid_issued_day>
+<tsValid_issued_UTC>02.03.2018 13:00 UTC</tsValid_issued_UTC>
+<tsValid_issued_RFC822>02 Mar 2018 13:00:00 +0000</tsValid_issued_RFC822>
+
+<tsUpdated>02.03.2018 14:04 CET</tsUpdated>
+<tsUpdated_day>Petek CET</tsUpdated_day>
+<tsUpdated_UTC>02.03.2018 13:04 UTC</tsUpdated_UTC>
+<tsUpdated_RFC822>02 Mar 2018 13:04:00 +0000</tsUpdated_RFC822>
+
+<valid_day>Petek CET</valid_day>
+<valid>02.03.2018 14:00 CET</valid>
+<valid_UTC>02.03.2018 13:00 UTC</valid_UTC>
+<validStart>02.03.2018 12:50 UTC</validStart>
+<validEnd>02.03.2018 13:00 UTC</validEnd>
+
+<t_var_desc>Temperatura</t_var_desc>
+<t_var_unit>°C</t_var_unit>
+<t>-2.5</t>
+<t_state>0</t_state>
+
+<td_var_desc>Temperatura rosišča</td_var_desc>
+<td_var_unit>°C</td_var_unit>
+<td>-4.4</td>
+<td_state>0</td_state>
+
+<tavg_var_desc>Povprečna temperatura v časovnem intervalu</tavg_var_desc>
+<tavg_var_unit>°C</tavg_var_unit>
+<tavg>-2.5</tavg>
+<tavg_state>0</tavg_state>
+
+<rh_var_desc>Relativna vlažnost</rh_var_desc>
+<rh_var_unit>%</rh_var_unit>
+<rh>87</rh>
+<rh_state>0</rh_state>
+
+<rhavg_var_desc>Povprečna relativna vlažnost v časovnem intervalu</rhavg_var_desc>
+<rhavg_var_unit>%</rhavg_var_unit>
+<rhavg>87</rhavg>
+<rhavg_state>0</rhavg_state>
+
+<dd_var_desc>Smer vetra</dd_var_desc>
+<dd_var_unit>°</dd_var_unit>
+<dd_val/>
+<dd_shortText/>
+<dd_icon/>
+<dd_state/>
+
+<ddavg_var_desc>Povprečna smer vetra v časovnem intervalu</ddavg_var_desc>
+<ddavg_var_unit>°</ddavg_var_unit>
+<ddavg_val/>
+<ddavg_shortText/>
+<ddavg_longText/>
+<ddavg_icon/>
+<ddavg_state/>
+
+<ff_var_desc>Hitrost vetra</ff_var_desc>
+<ff_var_unit>m/s</ff_var_unit>
+<ff_val/>
+<ff_val_kmh/>
+<ff_state/>
+
+<ffavg_var_desc>Povprečna hitrost vetra v časovnem intervalu</ffavg_var_desc>
+<ffavg_var_unit>m/s</ffavg_var_unit>
+<ffavg_val/>
+<ffavg_val_kmh/>
+<ffavg_state/>
+
+<msl_var_desc>Zračni tlak reduciran na morski nivo</msl_var_desc>
+<msl_var_unit>hPa</msl_var_unit>
+<msl/>
+<msl_state/>
+
+<mslavg_var_desc>Povprečni zračni tlak v časovnem intervalu reduciran na morski nivo</mslavg_var_desc>
+<mslavg_var_unit>hPa</mslavg_var_unit>
+<mslavg/>
+<mslavg_state/>
+
+<p_var_desc>Zračni tlak na lokaciji</p_var_desc>
+<p_var_unit>hPa</p_var_unit>
+<p/>
+<p_state/>
+
+<pavg_var_desc>Povprečni zračni tlak na lokaciji v časovnem intervalu</pavg_var_desc>
+<pavg_var_unit>hPa</pavg_var_unit>
+<pavg/>
+<pavg_state/>
+
+<rr_var_desc>Vsota padavin v časovnem intervalu</rr_var_desc>
+<rr_var_unit>mm</rr_var_unit>
+<rr_val>0</rr_val>
+<rr_state>0</rr_state>
+
+<snow_var_desc>Višina snežne odeje</snow_var_desc>
+<snow_var_unit>cm</snow_var_unit>
+<snow>77</snow>
+<snow_state>0</snow_state>
+
+<tp_12h_acc_var_desc>Vsota padavin (od 6 oz. 18 UTC dalje)</tp_12h_acc_var_desc>
+<tp_12h_acc_var_unit>mm</tp_12h_acc_var_unit>
+<tp_12h_acc>0</tp_12h_acc>
+<tp_12h_acc_state>0</tp_12h_acc_state>
+
+<tp_24h_acc_var_desc>24-urna vsota padavin</tp_24h_acc_var_desc>
+<tp_24h_acc_var_unit>mm</tp_24h_acc_var_unit>
+<tp_24h_acc/>
+<tp_24h_acc_state/>
+
+<tw_var_desc>Temperatura vode</tw_var_desc>
+<tw_var_unit>°C</tw_var_unit>
+<tw/>
+<tw_state/>
+
+
+<gSunRad_var_desc>Globalno sončno obsevanje</gSunRad_var_desc>
+<gSunRad_var_unit>W/m2</gSunRad_var_unit>
+<gSunRad/>
+<gSunRad_state/>
+
+<gSunRadavg_var_desc>Povprečno globalno sončno obsevanje v časovnem intervalu</gSunRadavg_var_desc>
+<gSunRadavg_var_unit>W/m2</gSunRadavg_var_unit>
+<gSunRadavg/>
+<gSunRadavg_state/>
+
+<diffSunRad_var_desc>Difuzno sončno obsevanje</diffSunRad_var_desc>
+<diffSunRad_var_unit>W/m2</diffSunRad_var_unit>
+<diffSunRad/><diffSunRad_state/>
+
+<diffSunRadavg_var_desc>Povprečno difuzno sončno obsevanje v časovnem intervalu</diffSunRadavg_var_desc>
+<diffSunRadavg_var_unit>W/m2</diffSunRadavg_var_unit>
+<diffSunRadavg/>
+<diffSunRadavg_state/>
+
+<vis_desc>Vidnost</vis_desc>
+<vis_val/>
+<vis_unit>km</vis_unit>
