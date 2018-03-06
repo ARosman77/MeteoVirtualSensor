@@ -58,6 +58,36 @@ class meteoData:
     def getWindSpeed(self):
         return self.getDataElement('ff_val')
 
+    def getWindDirection(self):
+        return self.getDataElement('dd_val')
+
+    def getDewTemp(self):
+        return self.getDataElement('td')
+
+    def getAtmPressure(self):
+        return self.getDataElement('msl')
+
+    def getRainfallMm(self):
+        return self.getDataElement('rr_val')
+
+    def getSnowCm(self):
+        return self.getDataElement('snow')
+
+    def getWaterTemp(self):
+        return self.getDataElement('tw')
+
+    def getVisibility(self):
+        return self.getDataElement('vis_val')
+
+    def getGlobalSunRad(self):
+        # Global sun radiation in W/m2
+        return self.getDataElement('gSunRad')
+
+    def getDiffuseSunRad(self):
+        # Diffuse sun radiation in W/m2
+        return self.getDataElement('diffSunRad')
+
+
 dataLjubljana = meteoData(testURL,'domain_shortTitle','LJUBLJANA - BEŽIGRAD')
 dataTitle = dataLjubljana.getLongTitle()
 dataTemp = dataLjubljana.getTemperature()
@@ -65,3 +95,12 @@ dataHum = dataLjubljana.getHumidity()
 dataWindSpeed = dataLjubljana.getWindSpeed()
 if (dataWindSpeed == None) : dataWindSpeed=""
 print(dataTitle + " : " + dataTemp + "°C / " + dataHum + "%  " + dataWindSpeed)
+print(dataLjubljana.getWindDirection())
+print(dataLjubljana.getDewTemp())
+print(dataLjubljana.getAtmPressure())
+print(dataLjubljana.getRainfallMm())
+print(dataLjubljana.getSnowCm())
+print(dataLjubljana.getWaterTemp())
+print(dataLjubljana.getVisibility())
+print(dataLjubljana.getGlobalSunRad())
+print(dataLjubljana.getDiffuseSunRad())
