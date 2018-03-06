@@ -23,12 +23,12 @@ class meteoData:
         self.tagNameData = None
         # fetch data at creation
         self.refreshData()
-    
+
     def fetchData(self):
         self.domDocument = minidom.parse(urllib.request.urlopen(self.meteoURL))
         self.metData = self.domDocument.getElementsByTagName('metData')
         return self.metData
-    
+
     def getTagNameData(self):
         for data in self.metData:
             if ( data.getElementsByTagName(self.tagName).item(0).firstChild.data == self.tagData ):
@@ -41,22 +41,22 @@ class meteoData:
         element = self.tagNameData.getElementsByTagName(tagName).item(0).firstChild
         if (element!=None): return element.data
         else: return None
-        
+
     def refreshData(self):
         self.fetchData()
         self.getTagNameData()
-        
+
     def getLongTitle(self):
-        return getDataElement('domain_longTitle')
-        
+        return self.getDataElement('domain_longTitle')
+
     def getTemperature(self):
-        return getDataElement('t')
-        
+        return self.getDataElement('t')
+
     def getHumidity(self):
-        return getDataElement('rh')
-        
+        return self.getDataElement('rh')
+
     def getWindSpeed(self):
-        return getDataElement('ff_val')
+        return self.getDataElement('ff_val')
 
 dataLjubljana = meteoData(testURL,'domain_shortTitle','LJUBLJANA - BEŽIGRAD')
 dataTitle = dataLjubljana.getLongTitle()
@@ -64,6 +64,4 @@ dataTemp = dataLjubljana.getTemperature()
 dataHum = dataLjubljana.getHumidity()
 dataWindSpeed = dataLjubljana.getWindSpeed()
 if (dataWindSpeed == None) : dataWindSpeed=""
-    print(dataTitle + " : " + dataTemp + "°C / " + dataHum + "%  " + dataWindSpeed)
-else:
-    print("Region data doesn't exist!")
+print(dataTitle + " : " + dataTemp + "°C / " + dataHum + "%  " + dataWindSpeed)
