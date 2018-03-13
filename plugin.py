@@ -55,11 +55,15 @@ class BasePlugin:
             if Parameters[x] != "":
                 Domoticz.Log( "'" + x + "':'" + str(Parameters[x]) + "'")
         
-        # dataStation = meteoData(Parameters["Mode1"],'domain_shortTitle',Parameters["Mode2"])
-        dataStation = meteoData("http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml",'domain_shortTitle','LJUBLJANA - BEŽIGRAD')
+        if Parameters["Mode1"] != "" and Parameters["Mode2"] != "":
+            dataStation = meteoData(Parameters["Mode1"],'domain_shortTitle',Parameters["Mode2"])
+        else:
+            dataStation = meteoData("http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml",'domain_shortTitle','LJUBLJANA - BEŽIGRAD')
                 
         # get read interval from settings
-        self.interval = int(Parameters["Mode3"])
+        if Parameters["Mode3"] != "" :
+            self.interval = int(Parameters["Mode3"])
+            
         if self.interval == None:
             Domoticz.Log("Unable to parse interval, so set it to 10 minutes")
             self.interval = 10
@@ -155,29 +159,29 @@ def updateDevices():
     
     # Temperature
     if dataStation.getTemperature() != None:
-        UpdateDevice(1, 0, str(round(dataStation.getTemperature(), 1)))
+        UpdateDevice(1, 0, dataStation.getTemperature())
 
     # Humidity
     if dataStation.getHumidity() != None:
-        UpdateDevice(2, dataStation.getHumidity(), str(dataStation.getHumidity()))
+        UpdateDevice(2, int(dataStation.getHumidity()), dataStation.getHumidity())
 
     # Temperature and Humidity
     if dataStation.getTemperature() != None and dataStation.getHumidity() != None:
         UpdateDevice(3, 0,
-                str(round(dataStation.getTemperature(), 1))
-                + ";" + str(dataStation.getHumidity())
-                + ";" + str(dataStation.getHumidity()))
+                dataStation.getTemperature()
+                + ";" + dataStation.getHumidity()
+                + ";" + dataStation.getHumidity())
 
     # Barometer
     if dataStation.getAtmPressure() != None:
         UpdateDevice(4, 0,
-                str(round(dataStation.getAtmPressure(), 1))
-                + ";" + str(dataStation.getAtmPressure()))
+                dataStation.getAtmPressure()
+                + ";" + dataStation.getAtmPressure())
 
     # Visibility
     if dataStation.getVisibility() != None:
-        UpdateDevice(7, 0, str(round(dataStation.getVisibility(), 1)))
+        UpdateDevice(7, 0, dataStation.getVisibility())
 
     # Solar Radiation
     if dataStation.getGlobalSunRad() != None:
-        UpdateDevice(8, 0, str(dataStation.getGlobalSunRad()))
+        UpdateDevice(8, 0, dataStation.getGlobalSunRad())
