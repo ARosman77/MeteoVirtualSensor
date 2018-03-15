@@ -3,9 +3,9 @@
 # Author: ARosman77
 #
 """
-<plugin key="Meteo.si" name="Meteo.si Virtual Sensor" author="ARosman77" version="1.0.0">
+<plugin key="MeteoSI" name="Meteo.si Virtual Sensor" author="ARosman77" version="1.0.0" wikilink="" externallink="">
     <params>
-        <param field="Mode1" label="Meteo.si URL" width="200px" required="true" default="http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml"/>
+        <param field="Address" label="Meteo.si URL" width="600px" required="true" default="http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml"/>
         <param field="Mode2" label="Station name" width="200px" required="true">
             <options>
                 <option label="Ljubljana" value="LJUBLJANA - BEŽIGRAD" default="true" />
@@ -13,7 +13,7 @@
                 <option label="Novo Mesto" value="NOVO MESTO" />
             </options>
         </param>
-        <param field="Mode3" label="Update every x minutes" width="200px" required="true" default="10"/>
+        <param field="Mode3" label="Update every x minutes" width="60px" required="true" default="10"/>
         <param field="Mode4" label="Temperature and humidity" width="200px" required="true">
             <options>
                 <option label="Combined in one device" value="True" default="true" />
@@ -48,17 +48,14 @@ class BasePlugin:
         Domoticz.Log("onStart called")
         
         # connect to Meteo.si with set paramters
-        Domoticz.Log("Connecting to Meteo.si ...")
-        
-        # debug
-        for x in Parameters:
-            if Parameters[x] != "":
-                Domoticz.Log( "'" + x + "':'" + str(Parameters[x]) + "'")
-        
-        if Parameters["Mode1"] != "" and Parameters["Mode2"] != "":
-            dataStation = meteoData(Parameters["Mode1"],'domain_shortTitle',Parameters["Mode2"])
+
+        if Parameters["Address"] != "" and Parameters["Mode2"] != "":
+            dataStation = meteoData(Parameters["Address"],'domain_shortTitle',Parameters["Mode2"])
+            Domoticz.Log("Connecting to Meteo.si @" + Parameters["Address"] + " ...")
+            Domoticz.Log("Fetching data from " + Parameters["Mode2"] + " station ...")
         else:
             dataStation = meteoData("http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml",'domain_shortTitle','LJUBLJANA - BEŽIGRAD')
+            Domoticz.Log("Connecting to Meteo.si default address / station ...")
                 
         # get read interval from settings
         if Parameters["Mode3"] != "" :
@@ -160,23 +157,36 @@ def updateDevices():
     # Temperature
     if dataStation.getTemperature() != None:
         UpdateDevice(1, 0, dataStation.getTemperature())
-
+    
     # Humidity
+    # -- Mapping for Humidity_status:
+    #  -- 0    			    = Normal 
+    #  -- 1    <> 46-70%   	= Comfortable 
+    #  -- 2    < 38        	= Dry
+    #  -- 3    > 70%       	= Wet
     if dataStation.getHumidity() != None:
-        UpdateDevice(2, int(dataStation.getHumidity()), dataStation.getHumidity())
+        _humidity = int(dataStation.getHumidity())
+        _humidity_status = 0
+        if (_humidity >= 46) and (_humidity <= 70):
+            _humidity_status = 1
+        if (_humidity < 38):
+            _humidity_status = 2
+        if (_humidity > 70):
+            _humidity_status = 3
+        UpdateDevice(2, _humidity, str(_humidity_status))
 
     # Temperature and Humidity
     if dataStation.getTemperature() != None and dataStation.getHumidity() != None:
         UpdateDevice(3, 0,
                 dataStation.getTemperature()
                 + ";" + dataStation.getHumidity()
-                + ";" + dataStation.getHumidity())
+                + ";" + str(_humidity_status))
 
     # Barometer
     if dataStation.getAtmPressure() != None:
         UpdateDevice(4, 0,
                 dataStation.getAtmPressure()
-                + ";" + dataStation.getAtmPressure())
+                + ";" + str(0) )    # Barometer forecast not implemented
 
     # Visibility
     if dataStation.getVisibility() != None:
