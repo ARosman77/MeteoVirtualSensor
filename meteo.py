@@ -25,22 +25,27 @@ class meteoData:
         self.refreshData()
 
     def fetchData(self):
-        self.domDocument = minidom.parse(urllib.request.urlopen(self.meteoURL))
-        self.metData = self.domDocument.getElementsByTagName('metData')
+        try:
+            self.domDocument = minidom.parse(urllib.request.urlopen(self.meteoURL))
+            self.metData = self.domDocument.getElementsByTagName('metData')
+        except urllib.error.HTTPError:
+            self.metData = None;
         return self.metData
 
     def getTagNameData(self):
-        for data in self.metData:
-            if ( data.getElementsByTagName(self.tagName).item(0).firstChild.data == self.tagData ):
-                self.tagNameData = data
-                return self.tagNameData
+        if (self.metData != None):
+            for data in self.metData:
+                if ( data.getElementsByTagName(self.tagName).item(0).firstChild.data == self.tagData ):
+                    self.tagNameData = data
+                    return self.tagNameData
         self.tagNameData = None
         return self.tagNameData
 
     def getDataElement(self, tagName):
-        element = self.tagNameData.getElementsByTagName(tagName).item(0).firstChild
-        if (element!=None): return element.data
-        else: return None
+        if (self.tagNameData != None):
+            element = self.tagNameData.getElementsByTagName(tagName).item(0).firstChild
+            if (element!=None): return element.data
+        return None
 
     def refreshData(self):
         self.fetchData()
@@ -94,6 +99,9 @@ dataTemp = dataLjubljana.getTemperature()
 dataHum = dataLjubljana.getHumidity()
 dataWindSpeed = dataLjubljana.getWindSpeed()
 if (dataWindSpeed == None) : dataWindSpeed=""
+if (dataTitle == None) : dataTitle = "Unknown"
+if (dataTemp == None) : dataTemp = "N/A";
+if (dataHum == None) : dataHum = "N/A";
 print(dataTitle + " : " + dataTemp + "°C / " + dataHum + "%  " + dataWindSpeed)
 print(dataLjubljana.getWindDirection())
 print(dataLjubljana.getDewTemp())
