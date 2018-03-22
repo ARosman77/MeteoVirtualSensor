@@ -76,13 +76,18 @@ class BasePlugin:
         updateDevices()
         
         # set heartbeat interval
-        Domoticz.Heartbeat(30)
+        # Domoticz.Heartbeat(30)
+        Domoticz.Heartbeat(10)
 
     def onHeartbeat(self):
+        global dataStation
         # increase heartbeat counter (30s)
+        # debug
+        self.interval = 1
+        #
         self.hbCounter += 1
         if self.hbCounter >= (self.interval*2):
-            Domoticz.Log("Updating Mete.si data ...")
+            Domoticz.Log("Updating Meteo.si data ...")
             self.hbCounter = 0
             updateDevices()
         return True
@@ -153,6 +158,7 @@ def updateDevices():
 
     # Refresh data and update devices
     dataStation.refreshData()
+    Domoticz.Log("Refreshing Meteo.si data ...")
     
     # Temperature
     if dataStation.getTemperature() != None:
