@@ -5,6 +5,11 @@
 # Author: ARosman77
 #
 
+try:
+    import Domoticz
+except ImportError:
+    import fakeDomoticz as Domoticz
+
 import urllib.request
 from xml.dom import minidom
 
@@ -25,6 +30,7 @@ class meteoData:
         self.refreshData()
 
     def fetchData(self):
+        Domoticz.Log("Connecting to Meteo.si @" + self.meteoURL + " ...")
         try:
             self.domDocument = minidom.parse(urllib.request.urlopen(self.meteoURL))
             self.metData = self.domDocument.getElementsByTagName('metData')
@@ -34,17 +40,21 @@ class meteoData:
 
     def getTagNameData(self):
         if (self.metData != None):
+            Domoticz.Log("Fetching data from " + self.tagData + " station ...")
             for data in self.metData:
                 if ( data.getElementsByTagName(self.tagName).item(0).firstChild.data == self.tagData ):
                     self.tagNameData = data
                     return self.tagNameData
+        Domoticz.Log("Fetching failed!")
         self.tagNameData = None
         return self.tagNameData
 
     def getDataElement(self, tagName):
         if (self.tagNameData != None):
             element = self.tagNameData.getElementsByTagName(tagName).item(0).firstChild
-            if (element!=None): return element.data
+            if (element!=None):
+                Domoticz.Log("Element " + tagName + " fetched : " + element.data)
+                return element.data
         return None
 
     def refreshData(self):

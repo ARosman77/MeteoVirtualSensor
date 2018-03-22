@@ -35,27 +35,25 @@ from xml.dom import minidom
 
 class BasePlugin:
     
-    dataStation = None
+    # dataStation = None
     
     def __init__ (self):
         self.hbCounter = 0
         self.interval = 10
+        self.dataStation = None
         return
 
     def onStart(self):
         
-        global dataStation
+        # global dataStation
         Domoticz.Log("onStart called")
         
         # connect to Meteo.si with set paramters
 
         if Parameters["Address"] != "" and Parameters["Mode2"] != "":
-            dataStation = meteoData(Parameters["Address"],'domain_shortTitle',Parameters["Mode2"])
-            Domoticz.Log("Connecting to Meteo.si @" + Parameters["Address"] + " ...")
-            Domoticz.Log("Fetching data from " + Parameters["Mode2"] + " station ...")
+            self.dataStation = meteoData(Parameters["Address"],'domain_shortTitle',Parameters["Mode2"])
         else:
-            dataStation = meteoData("http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml",'domain_shortTitle','LJUBLJANA - BEŽIGRAD')
-            Domoticz.Log("Connecting to Meteo.si default address / station ...")
+            self.dataStation = meteoData("http://www.meteo.si/uploads/probase/www/observ/surface/text/sl/observationAms_si_latest.xml",'domain_shortTitle','LJUBLJANA - BEŽIGRAD')
                 
         # get read interval from settings
         if Parameters["Mode3"] != "" :
@@ -73,23 +71,18 @@ class BasePlugin:
         createDevices()
         
         # update devices data
-        updateDevices()
+        updateDevices(self.dataStation)
         
         # set heartbeat interval
-        # Domoticz.Heartbeat(30)
-        Domoticz.Heartbeat(10)
+        Domoticz.Heartbeat(30)
+        # Domoticz.Heartbeat(10)
 
     def onHeartbeat(self):
-        global dataStation
         # increase heartbeat counter (30s)
-        # debug
-        self.interval = 1
-        #
         self.hbCounter += 1
         if self.hbCounter >= (self.interval*2):
-            Domoticz.Log("Updating Meteo.si data ...")
             self.hbCounter = 0
-            updateDevices()
+            updateDevices(self.dataStation)
         return True
 
 _plugin = BasePlugin()
@@ -154,11 +147,10 @@ def createDevices():
     
     Domoticz.Log("Devices checked and created/updated if necessary")
 
-def updateDevices():
+def updateDevices(dataStation):
 
     # Refresh data and update devices
     dataStation.refreshData()
-    Domoticz.Log("Refreshing Meteo.si data ...")
     
     # Temperature
     if dataStation.getTemperature() != None:
